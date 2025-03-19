@@ -1,0 +1,78 @@
+{
+  "games": [
+    {
+      "name": "Joe Simulator",
+      "date": "12/10/2023",
+      "shortdesc": "The original Joe Simulator experience",
+      "id": "joesim1",
+      "playable": true,
+      "video": false
+    },
+    {
+      "name": "Joe Simulator 2",
+      "date": "12/15/2023",
+      "shortdesc": "The second Joe simulator game, where Joe runs into some unexpected guests",
+      "id": "joesim2",
+      "playable": true,
+      "video": false
+    },
+    {
+      "name": "Joe Simulator 3",
+      "date": "1/13/2024",
+      "shortdesc": "The third Joe simulator game, the one where Simplified Joe appears and nobody likes him. Not even Joe.",
+      "id": "joesim3",
+      "playable": true,
+      "video": true,
+      "videotitle": "trailer",
+      "videourl": "https://www.youtube.com/watch?v=WHtrDkx49rE"
+    },
+    {
+      "name": "Joe Simulator 4",
+      "date": "???",
+      "shortdesc": "The fourth Joe simulator game, it is not released yet!",
+      "id": "joesim4",
+      "playable": false,
+      "video": true,
+      "videotitle": "trailer",
+      "videourl": "https://www.youtube.com/watch?v=NWXPywvhHnw"
+    },
+    {
+      "name": "Super Joe Fighters Ultimate",
+      "date": "???",
+      "shortdesc": "A giant fighting game with MANY Joe Simulator characters, and charcaters submitted by people on the discord!",
+      "id": "sjfu",
+      "playable": false,
+      "video": false,
+      "note": "Join the Joecord Discord to submit your own characters!"
+    },
+    {
+      "name": "Joe Maker",
+      "date": "2/18/2024",
+      "shortdesc": "Create your own Joe Simulator games in a grid-based way!",
+      "id": "joemaker",
+      "playable": false,
+      "video": false,
+      "note": "This used to exist but was taken down. Many things were broken."
+    },
+    {
+      "name": "Joe Simulator 99",
+      "date": "4/1/2024",
+      "shortdesc": "Join over-over simplified Joe on his way to... God knows where.",
+      "id": "joesim99",
+      "playable": true,
+      "video": false,
+      "note": "This was a joke game made of April Fools joking about the oversimplification of Joe & his friends"
+    },
+    {
+      "name": "Joe Simulator: [REDUX]",
+      "date": "4/1/2024",
+      "shortdesc": "The original first 2 Joe Simulator games remade in the style of Joe simulator 3, with many more 'improvements'.",
+      "id": "jsr",
+      "playable": false,
+      "video": true,
+      "videotitle": "trailer",
+      "videourl": "https://www.youtube.com/watch?v=sbr4zAry-vM",
+      "note": "Despite this being a remake, it is recommended to just play the originals instead. There's a reason you can't play it here."
+    }
+  ]
+}

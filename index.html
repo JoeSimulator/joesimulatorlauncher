@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joe Simulator Launcher</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .topbar {
+            background-color: #2c2c2c;
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .info-icon {
+            margin-left: 10px;
+            color: white;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .info-tooltip {
+            position: absolute;
+            background-color: #ff6700;
+            color: white;
+            padding: 12px;
+            border-radius: 6px;
+            width: 300px;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-top: 10px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+            font-weight: normal;
+            font-size: 14px;
+            text-align: left;
+            line-height: 1.4;
+            z-index: 20;
+        }
+
+        .info-tooltip:before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 0 10px 10px 10px;
+            border-style: solid;
+            border-color: transparent transparent #ff6700 transparent;
+        }
+
+        .info-icon:hover .info-tooltip {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            padding: 10px;
+            gap: 20px;
+            background-color: #1a1a1a;
+        }
+
+        .social-link {
+            padding: 8px 15px;
+            background-color: #333;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .social-link:hover {
+            background-color: #444;
+            transform: translateY(-2px);
+        }
+
+        .device-warning {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #333;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .device-warning h2 {
+            margin-bottom: 20px;
+            color: #ff6700;
+        }
+
+        .device-warning p {
+            line-height: 1.6;
+        }
+
+        .games-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            padding: 30px;
+        }
+
+        .game-card {
+            width: 300px;
+            height: 400px;
+            background-color: #2c2c2c;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            perspective: 1000px;
+        }
+
+        .game-card:hover {
+            transform: scale(1.03) rotate3d(0, 1, 0, 5deg);
+        }
+
+        .game-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .game-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .game-card:hover .game-info {
+            transform: translateY(0);
+        }
+
+        .game-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .game-date {
+            font-size: 14px;
+            color: #ccc;
+            margin-bottom: 10px;
+        }
+
+        .game-desc {
+            font-size: 16px;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 5px;
+            font-weight: bold;
+            text-decoration: none;
+            margin-top: 10px;
+            transition: background-color 0.2s, transform 0.2s;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+        }
+
+        .video-button {
+            background-color: #0066ff;
+            color: white;
+        }
+
+        .video-button:hover {
+            background-color: #0055cc;
+        }
+
+        .play-button {
+            background-color: #00cc66;
+            color: white;
+        }
+
+        .play-button:hover {
+            background-color: #00aa55;
+        }
+
+        .disabled-button {
+            background-color: #666;
+            color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .disabled-button:hover {
+            transform: none;
+        }
+
+        .game-note {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 10px;
+            background-color: rgba(255, 103, 0, 0.9);
+            color: white;
+            font-size: 14px;
+            text-align: center;
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+        }
+
+        .game-card:hover .game-note {
+            transform: translateY(0);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px;
+            font-size: 20px;
+            color: #ccc;
+        }
+
+        .error {
+            text-align: center;
+            padding: 50px;
+            font-size: 20px;
+            color: #ff4444;
+        }
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        Joe Simulator Launcher
+        <div class="info-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M440-280h80v-240h-80v240Zm40-320q17 0 28.5-11.5T520-640q0-17-11.5-28.5T480-680q-17 0-28.5 11.5T440-640q0 17 11.5 28.5T480-600Zm0 520q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" /></svg>
+            <div class="info-tooltip">
+                Because the PenguinMod servers are down, this is now the easiest way to play all Joe Simulator games because PenguinMod is where Joe Simulator was originally hosted!
+            </div>
+        </div>
+    </div>
+
+    <div class="social-links">
+        <a href="https://discord.gg/8DDdp45rNt" target="_blank" class="social-link">
+            Join Discord
+        </a>
+        <a href="https://www.youtube.com/@JoeSimulator" target="_blank" class="social-link">
+            YouTube Channel
+        </a>
+    </div>
+
+    <div id="device-check"></div>
+
+    <script>
+        function isMobileOrConsole() {
+            const userAgent = navigator.userAgent.toLowerCase();
+            const mobileKeywords = ['android', 'iphone', 'ipad', 'ipod', 'windows phone', 'nintendo', 'playstation', 'xbox'];
+
+            return mobileKeywords.some(keyword => userAgent.includes(keyword))
+        }
+
+        window.onload = function () {
+            const deviceCheckElement = document.getElementById('device-check');
+
+            if (isMobileOrConsole()) {
+                deviceCheckElement.innerHTML = `
+                        <div class="device-warning">
+                            <h2>Device Not Supported</h2>
+                            <p>You can't use this launcher on your current device. The Joe Simulator games are only supported on PC for now.</p>
+                            <p>Please access the launcher from a desktop computer to play the games.</p>
+                        </div>
+                    `;
+            } else {
+                deviceCheckElement.innerHTML = '<div class="loading">Loading games...</div>';
+
+                fetch('http://localhost:3000/getgames')
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        const games = Array.isArray(data.games) ? data.games : Object.values(data.games);
+
+                        let gamesHTML = '<div class="games-container">';
+
+                        games.forEach(game => {
+                            gamesHTML += `
+                                    <div class="game-card">
+                                        <img src="http://localhost:3000/files/banners/${game.id}.png" alt="${game.name}" class="game-image">
+                                        <div class="game-info">
+                                            <div class="game-title">${game.name}</div>
+                                            <div class="game-date">${game.playable ? 'Released on: ' + game.date : 'Not released yet'}</div>
+                                            <div class="game-desc">${game.shortdesc}</div>
+                                            ${game.video ? `<a href="${game.videourl || '#'}" target="_blank" class="button video-button">
+                                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h480q33 0 56.5 23.5T720-720v180l160-160v440L720-420v180q0 33-23.5 56.5T640-160H160Zm0-80h480v-480H160v480Zm0 0v-480 480Z"/></svg>
+                                                Play ${game.videotitle}
+                                            </a>` : ''}
+                                            ${game.playable ?
+                                                `<a href="/playgame/${game.id}" class="button play-button">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M320-200v-560l440 280-440 280Zm80-280Zm0 134 210-134-210-134v268Z"/></svg>
+                                                    Play ${game.name}
+                                                </a>` :
+                                                `<span class="button disabled-button">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+                                                    Not playable
+                                                </span>`
+                                        }
+                                        </div>
+                                        ${game.note ? `<div class="game-note">${game.note}</div>` : ''}
+                                    </div>
+                                `;
+                        });
+
+                        gamesHTML += '</div>';
+                        deviceCheckElement.innerHTML = gamesHTML;
+                    })
+                    .catch(error => {
+                        console.error('Error fetching games:', error);
+                        deviceCheckElement.innerHTML = `
+                                <div class="error">
+                                    <p>Failed to load games. Please make sure the API server is running at localhost:3000.</p>
+                                    <p>Error: ${error.message}</p>
+                                </div>
+                            `;
+                    });
+            }
+        };
+    </script>
+</body>
+</html>
